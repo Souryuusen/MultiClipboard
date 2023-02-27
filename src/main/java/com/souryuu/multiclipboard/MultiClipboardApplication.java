@@ -16,13 +16,12 @@ public class MultiClipboardApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Loading FXML
-        FXMLLoader loader = new FXMLLoader(MultiClipboardApplication.class.getResource("multiclipboard-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(MultiClipboardApplication.class.getResource("multiclipboard-view2.fxml"));
         // Scene Setup
-        Scene appScene = new Scene(loader.load(), 800, 600);
+        Scene appScene = new Scene(loader.load());
         stage.setTitle("Hello!");
         stage.setScene(appScene);
-        stage.setWidth(800);
-        stage.setHeight(600);
+        stage.sizeToScene();
         stage.show();
     }
 }

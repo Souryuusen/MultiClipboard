@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -16,12 +15,18 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.souryuu.multiclipboard.MultiClipboardController">
-   <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="800.0">
+<AnchorPane prefHeight="427.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.souryuu.multiclipboard.MultiClipboardController">
+    <!-- Menu Bar  -->
+    <MenuBar
+            layoutY="1.0"
+            prefHeight="26.0"
+            prefWidth="350">
      <menus>
        <Menu mnemonicParsing="false" text="File">
          <items>
-           <MenuItem mnemonicParsing="false" text="New">
+             <MenuItem mnemonicParsing="false" text="New">
                   <accelerator>
                      <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                   </accelerator>
@@ -70,8 +75,14 @@
        </Menu>
      </menus>
    </MenuBar>
-
-   <VBox alignment="CENTER" layoutX="6.0" layoutY="27.0" prefHeight="200.0" prefWidth="100.0" spacing="10">
+    <!--  Button Control Area -->
+   <VBox alignment="CENTER"
+         layoutX="6.0"
+         layoutY="27.0"
+         prefHeight="200.0"
+         prefWidth="137.0"
+         spacing="10"
+    >
       <children>
          <Button mnemonicParsing="false" text="Button" />
          <Button mnemonicParsing="false" text="Button" />
@@ -80,35 +91,52 @@
          <Button mnemonicParsing="false" text="Button" />
       </children>
    </VBox>
-
-   <BorderPane layoutX="106.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0">
+    <!--  Content Area  -->
+   <BorderPane
+           layoutX="142.0"
+           layoutY="27.0"
+           prefHeight="200.0"
+           prefWidth="200.0">
       <top>
-         <Label text="Label" BorderPane.alignment="CENTER" />
+         <Label text="Label"
+                BorderPane.alignment="CENTER" />
       </top>
       <center>
-         <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <ScrollPane
+                 prefHeight="200.0"
+                 prefWidth="200.0"
+                 BorderPane.alignment="CENTER">
            <content>
-             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+             <AnchorPane minHeight="0.0"
+                         minWidth="0.0"
+                         prefHeight="200.0"
+                         prefWidth="200.0">
                   <children>
-                     <TextArea prefHeight="200.0" prefWidth="200.0" />
+                     <TextArea
+                             prefHeight="200.0"
+                             prefWidth="200.0" />
                   </children>
                </AnchorPane>
            </content>
          </ScrollPane>
       </center>
    </BorderPane>
-
-   <FlowPane layoutX="6.0" layoutY="227.0" prefHeight="200.0" prefWidth="302.0">
+    <!--  Details Area  -->
+   <FlowPane
+           layoutX="6.0"
+           layoutY="227.0"
+           prefHeight="53.0"
+           prefWidth="342.0">
       <children>
-         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Set Position" />
+         <Button mnemonicParsing="false"
+                 prefHeight="26.0"
+                 prefWidth="100.0"
+                 text="Set Position" />
          <TextField prefHeight="26.0" prefWidth="50.0" />
          <Label text="Queue Size:" />
-         <TextField editable="false" focusTraversable="false" prefHeight="26.0" prefWidth="50.0" />
+         <TextField alignment="TOP_RIGHT" editable="false" focusTraversable="false" prefHeight="26.0" prefWidth="50.0" />
          <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Read From Text File" />
          <TextField prefHeight="26.0" prefWidth="150.0" />
       </children>
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
    </FlowPane>
 </AnchorPane>

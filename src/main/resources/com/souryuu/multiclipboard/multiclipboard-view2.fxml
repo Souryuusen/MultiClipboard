@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.souryuu.multiclipboard.MultiClipboardController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+    <!--  Menu Bar  -->
+        <MenuBar fx:id="menuBar" prefWidth="600" styleClass="menu-bar">
+            <Menu fx:id="menuFile" text="File">
+                <items>
+                    <MenuItem fx:id="menuItemExit" text="Exit"/>
+                </items>
+            </Menu>
+        </MenuBar>
+
+    </children>
+
+    <stylesheets>
+        <URL value="@multiclipboard-view2.css" />
+    </stylesheets>
+</AnchorPane>
