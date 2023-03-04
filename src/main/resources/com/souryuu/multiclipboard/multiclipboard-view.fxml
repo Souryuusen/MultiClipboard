@@ -9,20 +9,16 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="427.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.souryuu.multiclipboard.MultiClipboardController">
+<AnchorPane prefHeight="427.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.souryuu.multiclipboard.MultiClipboardController">
     <!-- Menu Bar  -->
-    <MenuBar
-            layoutY="1.0"
-            prefHeight="26.0"
-            prefWidth="350">
+    <MenuBar layoutY="1.0" prefHeight="26.0" prefWidth="350">
      <menus>
        <Menu mnemonicParsing="false" text="File">
          <items>
@@ -61,8 +57,11 @@
             <items>
                <Menu mnemonicParsing="false" text="Save File Extension">
                   <items>
-                     <RadioMenuItem mnemonicParsing="false" text="Save As *.dat" />
-                     <RadioMenuItem mnemonicParsing="false" text="Save As *.txt" />
+                     <RadioMenuItem mnemonicParsing="false" text="Save As *.dat">
+                        <toggleGroup>
+                           <ToggleGroup fx:id="extensionSelectGroupo" />
+                        </toggleGroup></RadioMenuItem>
+                     <RadioMenuItem mnemonicParsing="false" text="Save As *.txt" toggleGroup="$extensionSelectGroupo" />
                   </items>
                </Menu>
                <Menu mnemonicParsing="false" text="Text Separator">
@@ -76,13 +75,7 @@
      </menus>
    </MenuBar>
     <!--  Button Control Area -->
-   <VBox alignment="CENTER"
-         layoutX="6.0"
-         layoutY="27.0"
-         prefHeight="200.0"
-         prefWidth="137.0"
-         spacing="10"
-    >
+   <VBox alignment="CENTER" layoutX="6.0" layoutY="27.0" prefHeight="200.0" prefWidth="137.0" spacing="10">
       <children>
          <Button mnemonicParsing="false" text="Button" />
          <Button mnemonicParsing="false" text="Button" />
@@ -92,29 +85,16 @@
       </children>
    </VBox>
     <!--  Content Area  -->
-   <BorderPane
-           layoutX="142.0"
-           layoutY="27.0"
-           prefHeight="200.0"
-           prefWidth="200.0">
+   <BorderPane layoutX="142.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0">
       <top>
-         <Label text="Label"
-                BorderPane.alignment="CENTER" />
+         <Label text="Label" BorderPane.alignment="CENTER" />
       </top>
       <center>
-         <ScrollPane
-                 prefHeight="200.0"
-                 prefWidth="200.0"
-                 BorderPane.alignment="CENTER">
+         <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
            <content>
-             <AnchorPane minHeight="0.0"
-                         minWidth="0.0"
-                         prefHeight="200.0"
-                         prefWidth="200.0">
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                   <children>
-                     <TextArea
-                             prefHeight="200.0"
-                             prefWidth="200.0" />
+                     <TextArea prefHeight="200.0" prefWidth="200.0" />
                   </children>
                </AnchorPane>
            </content>
@@ -122,16 +102,9 @@
       </center>
    </BorderPane>
     <!--  Details Area  -->
-   <FlowPane
-           layoutX="6.0"
-           layoutY="227.0"
-           prefHeight="53.0"
-           prefWidth="342.0">
+   <FlowPane layoutX="6.0" layoutY="227.0" prefHeight="53.0" prefWidth="342.0">
       <children>
-         <Button mnemonicParsing="false"
-                 prefHeight="26.0"
-                 prefWidth="100.0"
-                 text="Set Position" />
+         <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Set Position" />
          <TextField prefHeight="26.0" prefWidth="50.0" />
          <Label text="Queue Size:" />
          <TextField alignment="TOP_RIGHT" editable="false" focusTraversable="false" prefHeight="26.0" prefWidth="50.0" />
