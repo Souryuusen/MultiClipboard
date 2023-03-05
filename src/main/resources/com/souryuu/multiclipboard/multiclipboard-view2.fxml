@@ -8,8 +8,9 @@
 <?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            fx:id="paneRoot"
             fx:controller="com.souryuu.multiclipboard.MultiClipboardController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0" >
     <!--  Menu Bar  -->
     <MenuBar fx:id="menuBar" prefWidth="600" prefHeight="25" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0">
         <Menu fx:id="menuFile" text="File">
@@ -98,24 +99,23 @@
         <Button fx:id="btnLoadContent" text="Load Content" onAction="#onBtnLoadContentClick"/>
         <Button fx:id="btnStartProcessing" text="Start" onAction="#onBtnStartProcessingClicked"/>
         <Button fx:id="btnStopProcessing" text="Stop" disable="true" onAction="#onBtnStopProcessingClicked"/>
-
         <AnchorPane fx:id="paneControlFieldAnchorPane">
             <Button fx:id="btnSetPosition" AnchorPane.leftAnchor="5" AnchorPane.rightAnchor="60" prefWidth="90" text="Set Index" onAction="#onBtnSetPositionClick"/>
             <TextField fx:id="fieldPosition" AnchorPane.leftAnchor="95" prefWidth="50" prefHeight="25" text="0" alignment="CENTER"/>
         </AnchorPane>
-
+        <AnchorPane fx:id="paneControlCurrentSizeAnchorPane">
+            <Label fx:id="labelCurrentSize" AnchorPane.leftAnchor="5" AnchorPane.rightAnchor="60" prefWidth="90" prefHeight="25" text="Size" alignment="CENTER"/>
+            <TextField fx:id="fieldCurrentSize" AnchorPane.leftAnchor="95" prefWidth="50" prefHeight="25" text="0" alignment="BASELINE_CENTER" editable="false"/>
+        </AnchorPane>
     </VBox>
-
     <!-- Current Content Area -->
     <TextArea fx:id="areaCurrentContent" styleClass="area-current-content"
               AnchorPane.leftAnchor="150" AnchorPane.topAnchor="30"
-              AnchorPane.rightAnchor="5" AnchorPane.bottomAnchor="55"
-              prefWidth="450" prefHeight="160">
+              AnchorPane.rightAnchor="5" AnchorPane.bottomAnchor="10"
+              prefWidth="450" prefHeight="160" editable="false">
     </TextArea>
-
     <!--  Used CSS Stylesheets  -->
     <stylesheets>
         <URL value="@multiclipboard-view2.css"/>
     </stylesheets>
-
 </AnchorPane>
