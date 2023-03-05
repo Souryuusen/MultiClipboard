@@ -1,8 +1,17 @@
 package com.souryuu.multiclipboard;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuBar;
 
 public class MultiClipboardController {
+
+    @FXML
+    MenuBar menuBar;
+
+    @FXML
+    public void initialize() {
+
+    }
 
     @FXML
     public void onMenuItemNewClick() {
@@ -82,5 +91,10 @@ public class MultiClipboardController {
     @FXML
     public void onBtnStopProcessingClicked() {
         System.out.println("Button \"Stop Processing\" Clicked!");
+    }
+
+    @FXML
+    public void onBtnSetPositionClick() {
+        System.out.println("Button \"Set Position\" Clicked!");
     }
 }

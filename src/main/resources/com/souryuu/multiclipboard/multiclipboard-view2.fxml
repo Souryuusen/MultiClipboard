@@ -1,107 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <?import java.net.URL?>
 <?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.souryuu.multiclipboard.MultiClipboardController"
             prefHeight="400.0" prefWidth="600.0">
-    <children>
     <!--  Menu Bar  -->
-        <MenuBar fx:id="menuBar" prefWidth="600" prefHeight="25">
-            <Menu fx:id="menuFile" text="File">
-                <items>
-                    <MenuItem fx:id="menuItemNew" text="Create New" onAction="#onMenuItemNewClick">
-                        <accelerator>
-                            <KeyCodeCombination alt = "DOWN" code="N" control="UP" meta="up" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemReadFromTxt" text="Read From *.txt" onAction="#onMenuItemReadFromTxtClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemSave" text="Save" onAction="#onMenuItemSaveClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemLoad" text="Load" onAction="#onMenuItemLoadClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="up"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemExit" text="Exit" onAction="#onMenuItemExitClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                </items>
-            </Menu>
-            <Menu fx:id="menuEdit" text="Edit">
-                <items>
-                    <MenuItem fx:id="menuItemAdd" text="Add" onAction="#onMenuItemAddClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemStart" text="Start" onAction="#onMenuItemStartClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemStop" text="Stop" onAction="#onMenuItemStopClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                    <MenuItem fx:id="menuItemReset" text="Reset" onAction="#onMenuItemResetClick">
-                        <accelerator>
-                            <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
-                        </accelerator>
-                    </MenuItem>
-                </items>
-            </Menu>
-            <Menu fx:id="menuOptions" text="Options">
-                <items>
-                    <Menu fx:id="menuFileExtensions" text="Save File Extension">
-                        <items>
-                            <fx:define>
-                                <ToggleGroup fx:id="toggleGroupExtensions"/>
-                            </fx:define>
-                            <RadioMenuItem fx:id="menuRadioSaveAsTxt" text="*.txt" toggleGroup="$toggleGroupExtensions" onAction="#onMenuRadioExtensionClick"/>
-                            <RadioMenuItem fx:id="menuRadioSaveAsDat" text="*.dat" toggleGroup="$toggleGroupExtensions" onAction="#onMenuRadioExtensionClick"/>
-                        </items>
-                    </Menu>
-                    <Menu fx:id="menuElementSeparator" text="Element Separator">
-                        <items>
-                            <fx:define>
-                                <ToggleGroup fx:id="toggleGroupSeparator"/>
-                            </fx:define>
-                            <RadioMenuItem fx:id="menuRadioSeparatorDefault" text="Default Separator" toggleGroup="$toggleGroupSeparator" onAction="#onMenuRadioSeparatorClick"/>
-                            <RadioMenuItem fx:id="menuRadioSeparatorCustom" text="Custom Separator" toggleGroup="$toggleGroupSeparator" onAction="#onMenuRadioSeparatorClick"/>
-                        </items>
-                    </Menu>
-                </items>
-            </Menu>
-        </MenuBar>
+    <MenuBar fx:id="menuBar" prefWidth="600" prefHeight="25" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0">
+        <Menu fx:id="menuFile" text="File">
+            <items>
+                <MenuItem fx:id="menuItemNew" text="Create New" onAction="#onMenuItemNewClick">
+                    <accelerator>
+                        <KeyCodeCombination alt = "DOWN" code="N" control="UP" meta="up" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemReadFromTxt" text="Read From *.txt" onAction="#onMenuItemReadFromTxtClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="R" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemSave" text="Save" onAction="#onMenuItemSaveClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemLoad" text="Load" onAction="#onMenuItemLoadClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="up"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemExit" text="Exit" onAction="#onMenuItemExitClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+            </items>
+        </Menu>
+        <Menu fx:id="menuEdit" text="Edit">
+            <items>
+                <MenuItem fx:id="menuItemAdd" text="Add" onAction="#onMenuItemAddClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemStart" text="Start" onAction="#onMenuItemStartClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemStop" text="Stop" onAction="#onMenuItemStopClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+                <MenuItem fx:id="menuItemReset" text="Reset" onAction="#onMenuItemResetClick">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP"/>
+                    </accelerator>
+                </MenuItem>
+            </items>
+        </Menu>
+        <Menu fx:id="menuOptions" text="Options">
+            <items>
+                <Menu fx:id="menuFileExtensions" text="Save File Extension">
+                    <items>
+                        <fx:define>
+                            <ToggleGroup fx:id="toggleGroupExtensions"/>
+                        </fx:define>
+                        <RadioMenuItem fx:id="menuRadioSaveAsTxt" text="*.txt" toggleGroup="$toggleGroupExtensions" onAction="#onMenuRadioExtensionClick"/>
+                        <RadioMenuItem fx:id="menuRadioSaveAsDat" text="*.dat" toggleGroup="$toggleGroupExtensions" onAction="#onMenuRadioExtensionClick"/>
+                    </items>
+                </Menu>
+                <Menu fx:id="menuElementSeparator" text="Element Separator">
+                    <items>
+                        <fx:define>
+                            <ToggleGroup fx:id="toggleGroupSeparator"/>
+                        </fx:define>
+                        <RadioMenuItem fx:id="menuRadioSeparatorDefault" text="Default Separator" toggleGroup="$toggleGroupSeparator" onAction="#onMenuRadioSeparatorClick"/>
+                        <RadioMenuItem fx:id="menuRadioSeparatorCustom" text="Custom Separator" toggleGroup="$toggleGroupSeparator" onAction="#onMenuRadioSeparatorClick"/>
+                       </items>
+                </Menu>
+            </items>
+        </Menu>
+    </MenuBar>
     <!--  Control Buttons Section -->
-        <VBox fx:id="paneControlButtonVBox"
-              layoutX="0" layoutY="30" prefWidth="150" prefHeight="175"
-              spacing="5" alignment="TOP_CENTER">
-            <children>
-                <Button fx:id="btnAddContent" prefWidth="130" prefHeight="30" text="Add From Clipboard" onAction="#onBtnAddContentClick"/>
-                <Button fx:id="btnSaveContent" prefWidth="130" prefHeight="30" text="Save Content" onAction="#onBtnSaveContentClick"/>
-                <Button fx:id="btnLoadContent" prefWidth="130" prefHeight="30" text="Load Content" onAction="#onBtnLoadContentClick"/>
-                <Button fx:id="btnStartProcessing" prefWidth="130" prefHeight="30" text="Start" onAction="#onBtnStartProcessingClicked"/>
-                <Button fx:id="btnStopProcessing" prefWidth="130" prefHeight="30" text="Stop" disable="true" onAction="#onBtnStopProcessingClicked"/>
-            </children>
-        </VBox>
-    </children>
+    <VBox fx:id="paneControlButtonVBox" styleClass="pane-control-button-vbox"
+          AnchorPane.leftAnchor="0" AnchorPane.topAnchor="30"
+          prefWidth="150" prefHeight="175"
+          spacing="10" alignment="CENTER">
+        <Button fx:id="btnAddContent" text="Add From Clipboard" onAction="#onBtnAddContentClick"/>
+        <Button fx:id="btnSaveContent" text="Save Content" onAction="#onBtnSaveContentClick"/>
+        <Button fx:id="btnLoadContent" text="Load Content" onAction="#onBtnLoadContentClick"/>
+        <Button fx:id="btnStartProcessing" text="Start" onAction="#onBtnStartProcessingClicked"/>
+        <Button fx:id="btnStopProcessing" text="Stop" disable="true" onAction="#onBtnStopProcessingClicked"/>
+
+        <AnchorPane fx:id="paneControlFieldAnchorPane">
+            <Button fx:id="btnSetPosition" AnchorPane.leftAnchor="5" AnchorPane.rightAnchor="60" prefWidth="90" text="Set Index" onAction="#onBtnSetPositionClick"/>
+            <TextField fx:id="fieldPosition" AnchorPane.leftAnchor="95" prefWidth="50" prefHeight="25" text="0" alignment="CENTER"/>
+        </AnchorPane>
+
+    </VBox>
+
+    <!-- Current Content Area -->
+    <TextArea fx:id="areaCurrentContent" styleClass="area-current-content"
+              AnchorPane.leftAnchor="150" AnchorPane.topAnchor="30"
+              AnchorPane.rightAnchor="5" AnchorPane.bottomAnchor="55"
+              prefWidth="450" prefHeight="160">
+    </TextArea>
+
+    <!--  Used CSS Stylesheets  -->
+    <stylesheets>
+        <URL value="@multiclipboard-view2.css"/>
+    </stylesheets>
+
 </AnchorPane>

@@ -1,3 +1,14 @@
-.menu-bar {
+.pane-control-button-vbox > Button {
+    -fx-pref-width: 140;
+    -fx-pref-height: 30;
+    -fx-font: 1.0em "Fira Sans", serif;
+}
+
+.pane-control-button-vbox > HBox > Button {
+    -fx-padding: 5, 0, 0, 0;
     -fx-background-color: red;
+    -fx-alignment: Center;
+}
+
+.area-current-content {
 }
