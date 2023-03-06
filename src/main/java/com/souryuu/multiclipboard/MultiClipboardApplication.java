@@ -14,7 +14,6 @@ public class MultiClipboardApplication extends Application {
 
     private static MultiClipboardApplication instance;
 
-    private ObservableList<ClipboardContent> contentList;
 
     protected static SimpleIntegerProperty currentIndex;
 
@@ -27,18 +26,6 @@ public class MultiClipboardApplication extends Application {
             instance = new MultiClipboardApplication();
         }
         return instance;
-    }
-
-    public ObservableList<ClipboardContent> getContentList() {
-        return contentList;
-    }
-
-    public void setContentList(ObservableList<ClipboardContent> contentList) {
-        this.contentList = contentList;
-    }
-
-    public ClipboardContent getCurrentContent() {
-        return getContentList().get(currentIndex.get());
     }
 
     protected SimpleIntegerProperty getCurrentIndex() {
