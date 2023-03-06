@@ -10,4 +10,8 @@ module com.souryuu.multiclipboard {
 
     opens com.souryuu.multiclipboard to javafx.fxml;
     exports com.souryuu.multiclipboard;
+    exports com.souryuu.multiclipboard.entity;
+    opens com.souryuu.multiclipboard.entity to javafx.fxml;
+    exports com.souryuu.multiclipboard.exception;
+    opens com.souryuu.multiclipboard.exception to javafx.fxml;
 }

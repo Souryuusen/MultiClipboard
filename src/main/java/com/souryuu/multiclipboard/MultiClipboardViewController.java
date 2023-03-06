@@ -1,21 +1,60 @@
 package com.souryuu.multiclipboard;
 
+import com.souryuu.multiclipboard.entity.ClipboardContent;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.util.converter.NumberStringConverter;
 
-public class MultiClipboardController {
+public class MultiClipboardViewController {
+    // Root Element
+    @FXML AnchorPane paneRoot;
+    // Menu Bar Variables Declaration
+    @FXML MenuBar menuBar;
+    @FXML Menu menuFile, menuEdit, menuOptions;
+    @FXML MenuItem menuItemNew, menuItemReadFromTxt, menuItemSave, menuItemLoad, menuItemExit;
+    @FXML MenuItem menuItemAdd, menuItemStart, menuItemStop, menuItemReset;
+    @FXML Menu menuFileExtensions, menuElementSeparator;
+    @FXML RadioMenuItem menuRadioSaveAsTxt, menuRadioSaveAsDat, menuRadioSeparatorDefault, menuRadioSeparatorCustom;
 
-    @FXML
-    MenuBar menuBar;
+    // Control Section Area Variable Declaration
+    @FXML VBox paneControlButtonVBox;
+    @FXML Button btnAddContent, btnSaveContent, btnLoadContent, btnStartProcessing, btnStopProcessing, btnSetPosition;
+    @FXML AnchorPane paneControlFieldAnchorPane, paneControlCurrentSizeAnchorPane;
+    @FXML TextField fieldPosition, fieldCurrentSize;
+    @FXML Label labelCurrentSize;
+
+    // Current Content Area Variables Declaration
+    @FXML TextArea areaCurrentContent;
+
+    // Variable Initialization
+    MultiClipboardViewController instance;
+    MultiClipboardApplication application;
+
+    public MultiClipboardViewController() {
+
+    }
+
+    public MultiClipboardViewController getInstance() {
+        if(instance == null) {
+            instance = this;
+        }
+        return instance;
+    }
 
     @FXML
     public void initialize() {
-
+        // Binding Of Variables Values To GUI Elements
+//        ClipboardContent currentContent = MultiClipboardApplication.getInstance().getCurrentContent();
+        fieldPosition.textProperty().bindBidirectional(MultiClipboardApplication.getInstance().getCurrentIndex(), new NumberStringConverter());
     }
 
     @FXML
     public void onMenuItemNewClick() {
         System.out.println("Menu Item \"New\" Clicked!");
+        MultiClipboardApplication.getInstance().increaseIndex();
     }
 
     @FXML
@@ -71,6 +110,7 @@ public class MultiClipboardController {
     @FXML
     public void onBtnAddContentClick() {
         System.out.println("Button \"Add\" Clicked!");
+        MultiClipboardApplication.getInstance().increaseIndex();
     }
 
     @FXML

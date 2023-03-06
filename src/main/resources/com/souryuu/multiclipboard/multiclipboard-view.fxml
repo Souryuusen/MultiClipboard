@@ -9,7 +9,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="paneRoot"
-            fx:controller="com.souryuu.multiclipboard.MultiClipboardController"
+            fx:controller="com.souryuu.multiclipboard.MultiClipboardViewController"
             prefHeight="400.0" prefWidth="600.0" >
     <!--  Menu Bar  -->
     <MenuBar fx:id="menuBar" prefWidth="600" prefHeight="25" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0">
@@ -116,6 +116,6 @@
     </TextArea>
     <!--  Used CSS Stylesheets  -->
     <stylesheets>
-        <URL value="@multiclipboard-view2.css"/>
+        <URL value="@multiclipboard-view.css"/>
     </stylesheets>
 </AnchorPane>
