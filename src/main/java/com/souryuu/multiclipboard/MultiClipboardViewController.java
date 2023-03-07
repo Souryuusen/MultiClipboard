@@ -1,12 +1,12 @@
 package com.souryuu.multiclipboard;
 
-import com.souryuu.multiclipboard.entity.ClipboardContent;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+
+import java.util.Optional;
 
 public class MultiClipboardViewController {
     // Root Element
@@ -30,31 +30,27 @@ public class MultiClipboardViewController {
     @FXML TextArea areaCurrentContent;
 
     // Variable Initialization
-    MultiClipboardViewController instance;
-    MultiClipboardApplication application;
+    private MultiClipboardDataModel dataModel;
 
-    public MultiClipboardViewController() {
-
-    }
-
-    public MultiClipboardViewController getInstance() {
-        if(instance == null) {
-            instance = this;
-        }
-        return instance;
+    {
+        dataModel = MultiClipboardDataModel.getInstance();
     }
 
     @FXML
     public void initialize() {
         // Binding Of Variables Values To GUI Elements
-//        ClipboardContent currentContent = MultiClipboardApplication.getInstance().getCurrentContent();
-        fieldPosition.textProperty().bindBidirectional(MultiClipboardApplication.getInstance().getCurrentIndex(), new NumberStringConverter());
+        fieldCurrentSize.textProperty().bindBidirectional(dataModel.getContentSizeProperty(), new NumberStringConverter());
+        areaCurrentContent.textProperty().bindBidirectional(dataModel.getCurrentContentTextProperty());
     }
 
     @FXML
     public void onMenuItemNewClick() {
-        System.out.println("Menu Item \"New\" Clicked!");
-        MultiClipboardApplication.getInstance().increaseIndex();
+        Optional<ButtonType> userChoice = showConfirmationDialog("Are you sure?", "New queue creation...", "Creation of new queue will result in clearing all data! Are You sure you want to create new queue?");
+        if(userChoice.get() == ButtonType.OK) {
+            dataModel.clearModel();
+        } else {
+            // TODO: Add Debuging Information After Selecting Cancel Option
+        }
     }
 
     @FXML
@@ -79,7 +75,7 @@ public class MultiClipboardViewController {
 
     @FXML
     public void onMenuItemAddClick() {
-        System.out.println("Menu Item \"Add\" Clicked!");
+        dataModel.addNewContentToQueue();
     }
 
     @FXML
@@ -109,8 +105,7 @@ public class MultiClipboardViewController {
 
     @FXML
     public void onBtnAddContentClick() {
-        System.out.println("Button \"Add\" Clicked!");
-        MultiClipboardApplication.getInstance().increaseIndex();
+        dataModel.addNewContentToQueue();
     }
 
     @FXML
@@ -136,5 +131,17 @@ public class MultiClipboardViewController {
     @FXML
     public void onBtnSetPositionClick() {
         System.out.println("Button \"Set Position\" Clicked!");
+    }
+
+    private Optional<ButtonType> showConfirmationDialog(String title, String header, String text) {
+        // Creation Of New Alert Pop-Up
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(text);
+        // Show Pop-Up
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result;
     }
 }
