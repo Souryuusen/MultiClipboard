@@ -1,6 +1,7 @@
 package com.souryuu.multiclipboard;
 
 import com.souryuu.multiclipboard.dao.ClipboardDAO;
+import com.souryuu.multiclipboard.dao.QueueDAO;
 import com.souryuu.multiclipboard.entity.ClipboardData;
 import com.souryuu.multiclipboard.entity.ContentType;
 import javafx.beans.binding.Bindings;
@@ -14,21 +15,26 @@ import javafx.collections.ObservableList;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
+import java.io.File;
+
 public class MultiClipboardDataModel {
 
     // Static Variables
     private static MultiClipboardDataModel instance;
 
     // Content List
-    private ObservableList<ClipboardData> contentList;
+    private final ObservableList<ClipboardData> contentList;
 
     // Properties Variables
     private IntegerProperty indexProperty;
-    private IntegerProperty contentSizeProperty;
-    private StringProperty currentContentTextProperty;
+    private final IntegerProperty contentSizeProperty;
+    private final StringProperty currentContentTextProperty;
 
     // Variables
     private ClipboardData currentContent;
+    private final String DEFAULT_SEPARATOR = "#-#";
+    private String customSeparator = "";
+    private boolean defaultSeparatorUsed;
 
     // Initializer Block
     {
@@ -41,6 +47,9 @@ public class MultiClipboardDataModel {
 
     // Singleton Pattern Private Constructor
     private MultiClipboardDataModel() {
+        // Fields Initialization
+        this.defaultSeparatorUsed = true;
+        // Creation Of Bindings And Listeners
         bindProperties();
         bindListeners();
     }
@@ -101,19 +110,36 @@ public class MultiClipboardDataModel {
         setCurrentContent(getContentList().get(contentIndex));
     }
 
+    public String getDefaultSeparator() {
+        return this.DEFAULT_SEPARATOR;
+    }
+
+    public String getCustomSeparator() {
+        return this.customSeparator;
+    }
+
+    public void setCustomSeparator(String customSeparator) {
+        this.customSeparator = customSeparator;
+    }
+
+    public boolean isDefaultSeparatorUsed() {
+        return this.defaultSeparatorUsed;
+    }
+
+    public void setDefaultSeparatorUsed(boolean defaultSeparatorUsed) {
+        this.defaultSeparatorUsed = defaultSeparatorUsed;
+    }
+
     private void bindProperties() {
         contentSizeProperty.bind(Bindings.size(contentList));
         currentContentTextProperty.bind(currentContent.getContentProperty());
     }
 
     private void bindListeners() {
-        getContentList().addListener(new ListChangeListener<ClipboardData>() {
-            @Override
-            public void onChanged(Change<? extends ClipboardData> change) {
-                ObservableList<ClipboardData> list = getContentList();
-                if(list != null && !list.isEmpty()) {
-                    updateCurrentContent(getIndexValue());
-                }
+        getContentList().addListener((ListChangeListener<ClipboardData>) change -> {
+            ObservableList<ClipboardData> list = getContentList();
+            if(list != null && !list.isEmpty()) {
+                updateCurrentContent(getIndexValue());
             }
         });
     }
@@ -141,6 +167,19 @@ public class MultiClipboardDataModel {
         getContentList().clear();
         setCurrentContent(new ClipboardData("", ContentType.TextContent));
         indexProperty = new SimpleIntegerProperty(0);
+    }
+
+    public void readQueueFromTxt(File inputFile) {
+        // Clearing Current Queue Data
+        clearModel();
+        // Adding All Read Queue Elements
+        getContentList().addAll(QueueDAO.readQueueFromTxt(inputFile));
+        // Setting Current Content To First Element Of Queue
+        if(getContentList() != null && !getContentList().isEmpty()) {
+            setCurrentContent(getContentList().get(0));
+        } else {
+            // TODO: Adding Exception For Null Result List Or Empty List
+        }
     }
 
 }

@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.converter.NumberStringConverter;
 
+import java.io.File;
 import java.util.Optional;
 
 public class MultiClipboardViewController {
@@ -30,7 +32,7 @@ public class MultiClipboardViewController {
     @FXML TextArea areaCurrentContent;
 
     // Variable Initialization
-    private MultiClipboardDataModel dataModel;
+    private final MultiClipboardDataModel dataModel;
 
     {
         dataModel = MultiClipboardDataModel.getInstance();
@@ -39,6 +41,10 @@ public class MultiClipboardViewController {
     @FXML
     public void initialize() {
         // Binding Of Variables Values To GUI Elements
+        bindVariables();
+    }
+
+    private void bindVariables() {
         fieldCurrentSize.textProperty().bindBidirectional(dataModel.getContentSizeProperty(), new NumberStringConverter());
         areaCurrentContent.textProperty().bindBidirectional(dataModel.getCurrentContentTextProperty());
     }
@@ -46,16 +52,33 @@ public class MultiClipboardViewController {
     @FXML
     public void onMenuItemNewClick() {
         Optional<ButtonType> userChoice = showConfirmationDialog("Are you sure?", "New queue creation...", "Creation of new queue will result in clearing all data! Are You sure you want to create new queue?");
-        if(userChoice.get() == ButtonType.OK) {
-            dataModel.clearModel();
-        } else {
-            // TODO: Add Debuging Information After Selecting Cancel Option
+        // Verification Of Received Input
+        if(userChoice.isPresent()) {
+            if (userChoice.get() == ButtonType.OK) {
+                dataModel.clearModel();
+            } else {
+                // TODO: Add Debuging Information After Selecting Cancel Option
+            }
         }
     }
 
     @FXML
     public void onMenuItemReadFromTxtClick() {
         System.out.println("Menu Item \"Read From Txt\" Clicked!");
+        Optional<ButtonType> userChoice = showConfirmationDialog("Are you sure?", "Loading New Queue From File...", "Reading new queue from text file will result in overwriting current queue. Are you sure you want to proceed?");
+        if(userChoice.isPresent()) {
+            if (userChoice.get() == ButtonType.OK) {
+                // Setting Of Selectable File Extensions
+                String[] extensions = {"txt"};
+                String[] extensionsDetails = {"Text Files"};
+                // Selection Of File
+                File selectedFile = showFileChooser(extensions, extensionsDetails);
+                // Reading Selected File Content Into Application Data Model
+                dataModel.readQueueFromTxt(selectedFile);
+            } else {
+                // TODO: Add Debuging Information After Selecting Cancel Option
+            }
+        }
     }
 
     @FXML
@@ -143,5 +166,29 @@ public class MultiClipboardViewController {
         Optional<ButtonType> result = alert.showAndWait();
 
         return result;
+    }
+
+    private File showFileChooser(String[] extensions, String[] extensionsText) {
+        // Verification Of Received Parameters
+        if(extensions == null || extensionsText == null) {
+            throw new IllegalArgumentException("Input Extensions Cannot Be Null!!");
+        }
+        if(extensions.length != extensionsText.length) {
+            throw new IllegalArgumentException("Size Of Input Extensions Arrays Have To Be Same!!");
+        }
+        // Creation Of File Chooser
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select New Queue File...");
+        // Addition Of File Extensions Filters From Parameters
+        for(int i = 0; i < extensions.length; i++) {
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(extensionsText[i], "*." + extensions[i]));
+        }
+        // File Selection
+        File selectedFile = fileChooser.showOpenDialog(paneRoot.getScene().getWindow());
+        if(selectedFile != null && selectedFile.isFile() && !selectedFile.isDirectory()) {
+            return selectedFile;
+        } else {
+            throw new IllegalArgumentException("Selected File Cannot Be Read!!");
+        }
     }
 }
