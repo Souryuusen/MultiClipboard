@@ -1,10 +1,17 @@
 package com.souryuu.multiclipboard;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.NativeInputEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.souryuu.multiclipboard.dao.ClipboardDAO;
 import com.souryuu.multiclipboard.dao.QueueDAO;
 import com.souryuu.multiclipboard.entity.ClipboardData;
 import com.souryuu.multiclipboard.entity.ContentExtension;
 import com.souryuu.multiclipboard.entity.ContentType;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
@@ -17,7 +24,7 @@ import javafx.scene.input.ClipboardContent;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class MultiClipboardDataModel {
+public class MultiClipboardDataModel implements NativeKeyListener {
 
     // Static Variables
     private static MultiClipboardDataModel instance;
@@ -40,7 +47,7 @@ public class MultiClipboardDataModel {
     // Initializer Block
     {
         contentList = FXCollections.observableArrayList();
-        indexProperty = new SimpleIntegerProperty(0);
+        indexProperty = new SimpleIntegerProperty(1);
         contentSizeProperty = new SimpleIntegerProperty(0);
         currentContentTextProperty = new SimpleStringProperty("");
         processingStartedProperty = new SimpleBooleanProperty(false);
@@ -49,6 +56,7 @@ public class MultiClipboardDataModel {
 
     // Singleton Pattern Private Constructor
     private MultiClipboardDataModel() {
+
         // Fields Initialization
         this.defaultSeparatorUsed = true;
         // Creation Of Bindings And Listeners
@@ -59,6 +67,15 @@ public class MultiClipboardDataModel {
     public static MultiClipboardDataModel getInstance() {
         if(instance == null) {
             instance = new MultiClipboardDataModel();
+            try {
+                GlobalScreen.registerNativeHook();
+            }
+            catch (NativeHookException ex) {
+                System.err.println("There was a problem registering the native hook.");
+                System.err.println(ex.getMessage());
+                System.exit(1);
+            }
+            GlobalScreen.addNativeKeyListener(instance);
         }
         return instance;
     }
@@ -109,7 +126,9 @@ public class MultiClipboardDataModel {
     }
 
     public void updateCurrentContent(int contentIndex) {
-        setCurrentContent(getContentList().get(contentIndex));
+        if(contentIndex >= 0 && contentIndex <= getContentSizeValue()-1) {
+            setCurrentContent(getContentList().get(contentIndex));
+        }
     }
 
     public String getDefaultSeparator() {
@@ -157,6 +176,7 @@ public class MultiClipboardDataModel {
             }
         });
         getIndexProperty().addListener((ChangeListener<? super Number>) (observableValue, oldValue, newValue) -> {
+            System.out.println(newValue);
             if(newValue.intValue() <= getContentSizeValue()) {
                 oldValue = newValue;
             }
@@ -225,6 +245,23 @@ public class MultiClipboardDataModel {
             return false;
         }
         return result;
+    }
+
+    private void increaseIndex() {
+        if(getIndexValue() + 1 <= getContentSizeValue()) {
+            System.out.println(getIndexValue());
+            setIndexValue(getIndexValue()+1);
+            updateCurrentContent(getIndexValue()-1);
+        } else {
+            setProcessingStarted(false);
+        }
+    }
+
+    @Override
+    public void nativeKeyReleased(NativeKeyEvent e) {
+        if(isProcessingStarted() && e.getKeyCode() == NativeKeyEvent.VC_ALT && e.getModifiers() == NativeKeyEvent.CTRL_L_MASK) {
+            increaseIndex();
+        }
     }
 
 }

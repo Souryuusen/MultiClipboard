@@ -51,6 +51,10 @@ public class MultiClipboardViewController {
         // Binding Of Variables Values To GUI Elements
         bindVariables();
         bindListeners();
+        // Init Of GUI Controls Values
+        fieldPosition.setText("1");
+        menuRadioSaveAsTxt.setSelected(true);
+        menuRadioSeparatorDefault.setSelected(true);
     }
 
     private void bindVariables() {
@@ -58,11 +62,17 @@ public class MultiClipboardViewController {
         areaCurrentContent.textProperty().bindBidirectional(dataModel.getCurrentContentTextProperty());
         btnStartProcessing.disableProperty().bind(dataModel.getProcessingStartedProperty());
         btnStopProcessing.disableProperty().bind(Bindings.not(dataModel.getProcessingStartedProperty()));
+        ;
     }
 
     private void bindListeners() {
         fieldPosition.textProperty().addListener((observable, oldValue, newValue) -> {
-            fieldPosition.setText(newValue.replaceAll("[^\\d]", ""));
+            if (newValue.matches("\\d*")) return;
+            if(newValue.matches("\\d*") && Integer.parseInt(newValue) > 0 && Integer.parseInt(newValue) <= dataModel.getContentSizeValue()) {
+                fieldPosition.setText(newValue.replaceAll("[^\\d]", ""));
+            } else {
+                fieldPosition.setText(oldValue);
+            }
         });
     }
 
@@ -140,12 +150,19 @@ public class MultiClipboardViewController {
 
     @FXML
     public void onMenuRadioExtensionClick() {
-        System.out.println("Menu Item \"Save Extension Change\" Clicked!");
+
     }
 
     @FXML
     public void onMenuRadioSeparatorClick() {
-        System.out.println("Menu Item \"Element Separator Change\" Clicked!");
+        dataModel.setDefaultSeparatorUsed(menuRadioSeparatorDefault.isSelected());
+        if(menuRadioSeparatorCustom.isSelected()) {
+            TextInputDialog dialog = new TextInputDialog("Provide New Custom Separator");
+            Optional<String> s = dialog.showAndWait();
+            if(s.isPresent()) {
+                dataModel.setCustomSeparator(s.get());
+            }
+        }
     }
 
     @FXML
@@ -176,7 +193,8 @@ public class MultiClipboardViewController {
     @FXML
     public void onBtnSetPositionClick() {
         if(!fieldPosition.getText().isEmpty()) {
-            dataModel.setIndexValue(Integer.parseInt(fieldPosition.getText().trim())-1);
+            dataModel.setIndexValue(Integer.parseInt(fieldPosition.getText().trim()));
+            dataModel.updateCurrentContent(dataModel.getIndexValue()-1);
         }
     }
 
@@ -289,4 +307,5 @@ public class MultiClipboardViewController {
             dataModel.setProcessingStarted(false);
         }
     }
+
 }
