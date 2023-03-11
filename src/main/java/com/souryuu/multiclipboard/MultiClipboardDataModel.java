@@ -2,7 +2,6 @@ package com.souryuu.multiclipboard;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
-import com.github.kwhat.jnativehook.NativeInputEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.souryuu.multiclipboard.dao.ClipboardDAO;
@@ -10,8 +9,6 @@ import com.souryuu.multiclipboard.dao.QueueDAO;
 import com.souryuu.multiclipboard.entity.ClipboardData;
 import com.souryuu.multiclipboard.entity.ContentExtension;
 import com.souryuu.multiclipboard.entity.ContentType;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
@@ -39,7 +36,7 @@ public class MultiClipboardDataModel implements NativeKeyListener {
     private final BooleanProperty processingStartedProperty;
 
     // Variables
-    private ClipboardData currentContent;
+    private final ClipboardData currentContent;
     private final String DEFAULT_SEPARATOR = "#-#";
     private String customSeparator = "";
     private boolean defaultSeparatorUsed;
@@ -261,6 +258,7 @@ public class MultiClipboardDataModel implements NativeKeyListener {
     public void nativeKeyReleased(NativeKeyEvent e) {
         if(isProcessingStarted() && e.getKeyCode() == NativeKeyEvent.VC_ALT && e.getModifiers() == NativeKeyEvent.CTRL_L_MASK) {
             increaseIndex();
+            ClipboardDAO.setClipboardContent(getCurrentContentTextValue());
         }
     }
 
